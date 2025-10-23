@@ -74,3 +74,36 @@ EXPOSE 8000
 CMD ["gunicorn", "backend.wsgi:application", "--bind", 
 
 """
+
+"""
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  workbench:
+    image: linuxserver/mysql-workbench
+    container_name: mysql-workbench
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./workbench/config:/config
+    depends_on:
+      - mysql
+"""
