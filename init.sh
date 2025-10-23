@@ -11,7 +11,7 @@ create_dir(){
         fi
     done
 }
-docfile_create(){
+create_docfile(){
 
     if [ ! -f "$BACKEND_DIR/Dockerfile" ]; then
         touch "$BACKEND_DIR/Dockerfile"
@@ -25,3 +25,4 @@ docfile_create(){
     fi
         echo "Created placeholder Dockerfile in $FRONTEND_DIR"
 }
+
