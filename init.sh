@@ -26,3 +26,16 @@ create_docfile(){
         echo "Created placeholder Dockerfile in $FRONTEND_DIR"
 }
 
+main(){
+    read input -p "is this your dev_setup? (y/n): " dev_setup
+        if [[ "$dev_setup" == "y" || "$dev_setup" == "Y" ]]; then
+            create_dir
+            create_docfile
+        fi "Created placeholder Dockerfile in $BACKEND_DIR"
+
+}
+
+if __name__ == "__main__"; then
+    main
+fi
+
