@@ -39,3 +39,38 @@ if __name__ == "__main__"; then
     main
 fi
 
+
+"""
+# Lightweight ReactJS Dockerfile
+FROM node:18-alpine AS build
+
+WORKDIR /app
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci --silent
+COPY frontend/ ./
+RUN npm run build
+
+# Serve with lightweight web server
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+"""
+
+"""
+# Lightweight Django Dockerfile
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/ ./
+
+EXPOSE 8000
+CMD ["gunicorn", "backend.wsgi:application", "--bind", 
+
+"""
